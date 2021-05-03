@@ -30,7 +30,30 @@ async function post(req, res) {
     }) // aqui o envio
 }
 
+async function put(req, res) {
+    const { id } = req.params
+
+    const product = await ProductsModel.findOneAndUpdate({ _id: id }, req.body, { new: true })
+
+    res.send({
+        message: 'success',
+        product,
+    })
+
+    /*
+    const product = await ProductsModel.findOne({ _id: id }) // acha o elemento. Poderia ser, também, o findById.
+
+    await product.updateOne(req.body) // este método atualiza o objeto. O parâmetro req.body recebe tudo de uma vez e não só um elemento específico.
+
+    res.send({
+        message: 'success',
+        product,
+    })
+    */
+}
+
 module.exports = {
     get,
     post,
+    put,
 }
